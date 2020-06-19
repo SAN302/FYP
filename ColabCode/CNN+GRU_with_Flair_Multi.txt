@@ -1,0 +1,2454 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "accelerator": "GPU",
+    "colab": {
+      "name": "CNN+GRU with Flair Multi.ipynb",
+      "provenance": [],
+      "collapsed_sections": [],
+      "machine_shape": "hm"
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.6.5"
+    },
+    "widgets": {
+      "application/vnd.jupyter.widget-state+json": {
+        "9810b9ce8a724a04895e0f0761cb4c1d": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "HBoxModel",
+          "state": {
+            "_view_name": "HBoxView",
+            "_dom_classes": [],
+            "_model_name": "HBoxModel",
+            "_view_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "_view_count": null,
+            "_view_module_version": "1.5.0",
+            "box_style": "",
+            "layout": "IPY_MODEL_bf496edd9f02492e9455abb9db1943c0",
+            "_model_module": "@jupyter-widgets/controls",
+            "children": [
+              "IPY_MODEL_1b23d4613cdd4279b941e2b871b4a8cb",
+              "IPY_MODEL_99841ff6c16e4612954c3fff8289d148"
+            ]
+          }
+        },
+        "bf496edd9f02492e9455abb9db1943c0": {
+          "model_module": "@jupyter-widgets/base",
+          "model_name": "LayoutModel",
+          "state": {
+            "_view_name": "LayoutView",
+            "grid_template_rows": null,
+            "right": null,
+            "justify_content": null,
+            "_view_module": "@jupyter-widgets/base",
+            "overflow": null,
+            "_model_module_version": "1.2.0",
+            "_view_count": null,
+            "flex_flow": null,
+            "width": null,
+            "min_width": null,
+            "border": null,
+            "align_items": null,
+            "bottom": null,
+            "_model_module": "@jupyter-widgets/base",
+            "top": null,
+            "grid_column": null,
+            "overflow_y": null,
+            "overflow_x": null,
+            "grid_auto_flow": null,
+            "grid_area": null,
+            "grid_template_columns": null,
+            "flex": null,
+            "_model_name": "LayoutModel",
+            "justify_items": null,
+            "grid_row": null,
+            "max_height": null,
+            "align_content": null,
+            "visibility": null,
+            "align_self": null,
+            "height": null,
+            "min_height": null,
+            "padding": null,
+            "grid_auto_rows": null,
+            "grid_gap": null,
+            "max_width": null,
+            "order": null,
+            "_view_module_version": "1.2.0",
+            "grid_template_areas": null,
+            "object_position": null,
+            "object_fit": null,
+            "grid_auto_columns": null,
+            "margin": null,
+            "display": null,
+            "left": null
+          }
+        },
+        "1b23d4613cdd4279b941e2b871b4a8cb": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "FloatProgressModel",
+          "state": {
+            "_view_name": "ProgressView",
+            "style": "IPY_MODEL_007b72be6c724acba9d8bb7286836ec1",
+            "_dom_classes": [],
+            "description": "Downloading: 100%",
+            "_model_name": "FloatProgressModel",
+            "bar_style": "success",
+            "max": 231508,
+            "_view_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "value": 231508,
+            "_view_count": null,
+            "_view_module_version": "1.5.0",
+            "orientation": "horizontal",
+            "min": 0,
+            "description_tooltip": null,
+            "_model_module": "@jupyter-widgets/controls",
+            "layout": "IPY_MODEL_c3aff9f63dd74f6a8259f6f46a403e5e"
+          }
+        },
+        "99841ff6c16e4612954c3fff8289d148": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "HTMLModel",
+          "state": {
+            "_view_name": "HTMLView",
+            "style": "IPY_MODEL_673095ef16c54e2e9d9278d9b8687b11",
+            "_dom_classes": [],
+            "description": "",
+            "_model_name": "HTMLModel",
+            "placeholder": "​",
+            "_view_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "value": " 232k/232k [00:00&lt;00:00, 303kB/s]",
+            "_view_count": null,
+            "_view_module_version": "1.5.0",
+            "description_tooltip": null,
+            "_model_module": "@jupyter-widgets/controls",
+            "layout": "IPY_MODEL_aa283bb3949944db85328ec956c5293b"
+          }
+        },
+        "007b72be6c724acba9d8bb7286836ec1": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "ProgressStyleModel",
+          "state": {
+            "_view_name": "StyleView",
+            "_model_name": "ProgressStyleModel",
+            "description_width": "initial",
+            "_view_module": "@jupyter-widgets/base",
+            "_model_module_version": "1.5.0",
+            "_view_count": null,
+            "_view_module_version": "1.2.0",
+            "bar_color": null,
+            "_model_module": "@jupyter-widgets/controls"
+          }
+        },
+        "c3aff9f63dd74f6a8259f6f46a403e5e": {
+          "model_module": "@jupyter-widgets/base",
+          "model_name": "LayoutModel",
+          "state": {
+            "_view_name": "LayoutView",
+            "grid_template_rows": null,
+            "right": null,
+            "justify_content": null,
+            "_view_module": "@jupyter-widgets/base",
+            "overflow": null,
+            "_model_module_version": "1.2.0",
+            "_view_count": null,
+            "flex_flow": null,
+            "width": null,
+            "min_width": null,
+            "border": null,
+            "align_items": null,
+            "bottom": null,
+            "_model_module": "@jupyter-widgets/base",
+            "top": null,
+            "grid_column": null,
+            "overflow_y": null,
+            "overflow_x": null,
+            "grid_auto_flow": null,
+            "grid_area": null,
+            "grid_template_columns": null,
+            "flex": null,
+            "_model_name": "LayoutModel",
+            "justify_items": null,
+            "grid_row": null,
+            "max_height": null,
+            "align_content": null,
+            "visibility": null,
+            "align_self": null,
+            "height": null,
+            "min_height": null,
+            "padding": null,
+            "grid_auto_rows": null,
+            "grid_gap": null,
+            "max_width": null,
+            "order": null,
+            "_view_module_version": "1.2.0",
+            "grid_template_areas": null,
+            "object_position": null,
+            "object_fit": null,
+            "grid_auto_columns": null,
+            "margin": null,
+            "display": null,
+            "left": null
+          }
+        },
+        "673095ef16c54e2e9d9278d9b8687b11": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "DescriptionStyleModel",
+          "state": {
+            "_view_name": "StyleView",
+            "_model_name": "DescriptionStyleModel",
+            "description_width": "",
+            "_view_module": "@jupyter-widgets/base",
+            "_model_module_version": "1.5.0",
+            "_view_count": null,
+            "_view_module_version": "1.2.0",
+            "_model_module": "@jupyter-widgets/controls"
+          }
+        },
+        "aa283bb3949944db85328ec956c5293b": {
+          "model_module": "@jupyter-widgets/base",
+          "model_name": "LayoutModel",
+          "state": {
+            "_view_name": "LayoutView",
+            "grid_template_rows": null,
+            "right": null,
+            "justify_content": null,
+            "_view_module": "@jupyter-widgets/base",
+            "overflow": null,
+            "_model_module_version": "1.2.0",
+            "_view_count": null,
+            "flex_flow": null,
+            "width": null,
+            "min_width": null,
+            "border": null,
+            "align_items": null,
+            "bottom": null,
+            "_model_module": "@jupyter-widgets/base",
+            "top": null,
+            "grid_column": null,
+            "overflow_y": null,
+            "overflow_x": null,
+            "grid_auto_flow": null,
+            "grid_area": null,
+            "grid_template_columns": null,
+            "flex": null,
+            "_model_name": "LayoutModel",
+            "justify_items": null,
+            "grid_row": null,
+            "max_height": null,
+            "align_content": null,
+            "visibility": null,
+            "align_self": null,
+            "height": null,
+            "min_height": null,
+            "padding": null,
+            "grid_auto_rows": null,
+            "grid_gap": null,
+            "max_width": null,
+            "order": null,
+            "_view_module_version": "1.2.0",
+            "grid_template_areas": null,
+            "object_position": null,
+            "object_fit": null,
+            "grid_auto_columns": null,
+            "margin": null,
+            "display": null,
+            "left": null
+          }
+        },
+        "7423ced8ffcf4f48920caf33c086cfaf": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "HBoxModel",
+          "state": {
+            "_view_name": "HBoxView",
+            "_dom_classes": [],
+            "_model_name": "HBoxModel",
+            "_view_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "_view_count": null,
+            "_view_module_version": "1.5.0",
+            "box_style": "",
+            "layout": "IPY_MODEL_77472331ea9b4ebcab34007e98b81d2c",
+            "_model_module": "@jupyter-widgets/controls",
+            "children": [
+              "IPY_MODEL_bfe52ea1cf154c9fa671bba41e31e4e6",
+              "IPY_MODEL_b74a2fde2b6e4852a682e74656c0b46e"
+            ]
+          }
+        },
+        "77472331ea9b4ebcab34007e98b81d2c": {
+          "model_module": "@jupyter-widgets/base",
+          "model_name": "LayoutModel",
+          "state": {
+            "_view_name": "LayoutView",
+            "grid_template_rows": null,
+            "right": null,
+            "justify_content": null,
+            "_view_module": "@jupyter-widgets/base",
+            "overflow": null,
+            "_model_module_version": "1.2.0",
+            "_view_count": null,
+            "flex_flow": null,
+            "width": null,
+            "min_width": null,
+            "border": null,
+            "align_items": null,
+            "bottom": null,
+            "_model_module": "@jupyter-widgets/base",
+            "top": null,
+            "grid_column": null,
+            "overflow_y": null,
+            "overflow_x": null,
+            "grid_auto_flow": null,
+            "grid_area": null,
+            "grid_template_columns": null,
+            "flex": null,
+            "_model_name": "LayoutModel",
+            "justify_items": null,
+            "grid_row": null,
+            "max_height": null,
+            "align_content": null,
+            "visibility": null,
+            "align_self": null,
+            "height": null,
+            "min_height": null,
+            "padding": null,
+            "grid_auto_rows": null,
+            "grid_gap": null,
+            "max_width": null,
+            "order": null,
+            "_view_module_version": "1.2.0",
+            "grid_template_areas": null,
+            "object_position": null,
+            "object_fit": null,
+            "grid_auto_columns": null,
+            "margin": null,
+            "display": null,
+            "left": null
+          }
+        },
+        "bfe52ea1cf154c9fa671bba41e31e4e6": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "FloatProgressModel",
+          "state": {
+            "_view_name": "ProgressView",
+            "style": "IPY_MODEL_e79e2d58c2bc4a368b88f11ab24fe762",
+            "_dom_classes": [],
+            "description": "Downloading: 100%",
+            "_model_name": "FloatProgressModel",
+            "bar_style": "success",
+            "max": 433,
+            "_view_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "value": 433,
+            "_view_count": null,
+            "_view_module_version": "1.5.0",
+            "orientation": "horizontal",
+            "min": 0,
+            "description_tooltip": null,
+            "_model_module": "@jupyter-widgets/controls",
+            "layout": "IPY_MODEL_21a437921b9d4d5895b2d7e7707b2b50"
+          }
+        },
+        "b74a2fde2b6e4852a682e74656c0b46e": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "HTMLModel",
+          "state": {
+            "_view_name": "HTMLView",
+            "style": "IPY_MODEL_d84e13c8774846f8bd604a844dc720ab",
+            "_dom_classes": [],
+            "description": "",
+            "_model_name": "HTMLModel",
+            "placeholder": "​",
+            "_view_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "value": " 433/433 [00:08&lt;00:00, 50.9B/s]",
+            "_view_count": null,
+            "_view_module_version": "1.5.0",
+            "description_tooltip": null,
+            "_model_module": "@jupyter-widgets/controls",
+            "layout": "IPY_MODEL_b0cc9a809cd54a178dfb2c3c9e7ed732"
+          }
+        },
+        "e79e2d58c2bc4a368b88f11ab24fe762": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "ProgressStyleModel",
+          "state": {
+            "_view_name": "StyleView",
+            "_model_name": "ProgressStyleModel",
+            "description_width": "initial",
+            "_view_module": "@jupyter-widgets/base",
+            "_model_module_version": "1.5.0",
+            "_view_count": null,
+            "_view_module_version": "1.2.0",
+            "bar_color": null,
+            "_model_module": "@jupyter-widgets/controls"
+          }
+        },
+        "21a437921b9d4d5895b2d7e7707b2b50": {
+          "model_module": "@jupyter-widgets/base",
+          "model_name": "LayoutModel",
+          "state": {
+            "_view_name": "LayoutView",
+            "grid_template_rows": null,
+            "right": null,
+            "justify_content": null,
+            "_view_module": "@jupyter-widgets/base",
+            "overflow": null,
+            "_model_module_version": "1.2.0",
+            "_view_count": null,
+            "flex_flow": null,
+            "width": null,
+            "min_width": null,
+            "border": null,
+            "align_items": null,
+            "bottom": null,
+            "_model_module": "@jupyter-widgets/base",
+            "top": null,
+            "grid_column": null,
+            "overflow_y": null,
+            "overflow_x": null,
+            "grid_auto_flow": null,
+            "grid_area": null,
+            "grid_template_columns": null,
+            "flex": null,
+            "_model_name": "LayoutModel",
+            "justify_items": null,
+            "grid_row": null,
+            "max_height": null,
+            "align_content": null,
+            "visibility": null,
+            "align_self": null,
+            "height": null,
+            "min_height": null,
+            "padding": null,
+            "grid_auto_rows": null,
+            "grid_gap": null,
+            "max_width": null,
+            "order": null,
+            "_view_module_version": "1.2.0",
+            "grid_template_areas": null,
+            "object_position": null,
+            "object_fit": null,
+            "grid_auto_columns": null,
+            "margin": null,
+            "display": null,
+            "left": null
+          }
+        },
+        "d84e13c8774846f8bd604a844dc720ab": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "DescriptionStyleModel",
+          "state": {
+            "_view_name": "StyleView",
+            "_model_name": "DescriptionStyleModel",
+            "description_width": "",
+            "_view_module": "@jupyter-widgets/base",
+            "_model_module_version": "1.5.0",
+            "_view_count": null,
+            "_view_module_version": "1.2.0",
+            "_model_module": "@jupyter-widgets/controls"
+          }
+        },
+        "b0cc9a809cd54a178dfb2c3c9e7ed732": {
+          "model_module": "@jupyter-widgets/base",
+          "model_name": "LayoutModel",
+          "state": {
+            "_view_name": "LayoutView",
+            "grid_template_rows": null,
+            "right": null,
+            "justify_content": null,
+            "_view_module": "@jupyter-widgets/base",
+            "overflow": null,
+            "_model_module_version": "1.2.0",
+            "_view_count": null,
+            "flex_flow": null,
+            "width": null,
+            "min_width": null,
+            "border": null,
+            "align_items": null,
+            "bottom": null,
+            "_model_module": "@jupyter-widgets/base",
+            "top": null,
+            "grid_column": null,
+            "overflow_y": null,
+            "overflow_x": null,
+            "grid_auto_flow": null,
+            "grid_area": null,
+            "grid_template_columns": null,
+            "flex": null,
+            "_model_name": "LayoutModel",
+            "justify_items": null,
+            "grid_row": null,
+            "max_height": null,
+            "align_content": null,
+            "visibility": null,
+            "align_self": null,
+            "height": null,
+            "min_height": null,
+            "padding": null,
+            "grid_auto_rows": null,
+            "grid_gap": null,
+            "max_width": null,
+            "order": null,
+            "_view_module_version": "1.2.0",
+            "grid_template_areas": null,
+            "object_position": null,
+            "object_fit": null,
+            "grid_auto_columns": null,
+            "margin": null,
+            "display": null,
+            "left": null
+          }
+        },
+        "7e240a910ecc4aab8d4c2a12b3c1a740": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "HBoxModel",
+          "state": {
+            "_view_name": "HBoxView",
+            "_dom_classes": [],
+            "_model_name": "HBoxModel",
+            "_view_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "_view_count": null,
+            "_view_module_version": "1.5.0",
+            "box_style": "",
+            "layout": "IPY_MODEL_a8a306ec2a424b5f90778d5e8a0a4643",
+            "_model_module": "@jupyter-widgets/controls",
+            "children": [
+              "IPY_MODEL_6c001090d5ca4a1aa64f6f50f24e4d33",
+              "IPY_MODEL_86a845c5e1a943b7b5b5a5924fa63c69"
+            ]
+          }
+        },
+        "a8a306ec2a424b5f90778d5e8a0a4643": {
+          "model_module": "@jupyter-widgets/base",
+          "model_name": "LayoutModel",
+          "state": {
+            "_view_name": "LayoutView",
+            "grid_template_rows": null,
+            "right": null,
+            "justify_content": null,
+            "_view_module": "@jupyter-widgets/base",
+            "overflow": null,
+            "_model_module_version": "1.2.0",
+            "_view_count": null,
+            "flex_flow": null,
+            "width": null,
+            "min_width": null,
+            "border": null,
+            "align_items": null,
+            "bottom": null,
+            "_model_module": "@jupyter-widgets/base",
+            "top": null,
+            "grid_column": null,
+            "overflow_y": null,
+            "overflow_x": null,
+            "grid_auto_flow": null,
+            "grid_area": null,
+            "grid_template_columns": null,
+            "flex": null,
+            "_model_name": "LayoutModel",
+            "justify_items": null,
+            "grid_row": null,
+            "max_height": null,
+            "align_content": null,
+            "visibility": null,
+            "align_self": null,
+            "height": null,
+            "min_height": null,
+            "padding": null,
+            "grid_auto_rows": null,
+            "grid_gap": null,
+            "max_width": null,
+            "order": null,
+            "_view_module_version": "1.2.0",
+            "grid_template_areas": null,
+            "object_position": null,
+            "object_fit": null,
+            "grid_auto_columns": null,
+            "margin": null,
+            "display": null,
+            "left": null
+          }
+        },
+        "6c001090d5ca4a1aa64f6f50f24e4d33": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "FloatProgressModel",
+          "state": {
+            "_view_name": "ProgressView",
+            "style": "IPY_MODEL_15ce6921d2e449779da2f6386840fd7f",
+            "_dom_classes": [],
+            "description": "Downloading: 100%",
+            "_model_name": "FloatProgressModel",
+            "bar_style": "success",
+            "max": 440473133,
+            "_view_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "value": 440473133,
+            "_view_count": null,
+            "_view_module_version": "1.5.0",
+            "orientation": "horizontal",
+            "min": 0,
+            "description_tooltip": null,
+            "_model_module": "@jupyter-widgets/controls",
+            "layout": "IPY_MODEL_9566f901792a4a91887799ca99648a03"
+          }
+        },
+        "86a845c5e1a943b7b5b5a5924fa63c69": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "HTMLModel",
+          "state": {
+            "_view_name": "HTMLView",
+            "style": "IPY_MODEL_dff5aec6b2384329a6eb3a43c5647d2b",
+            "_dom_classes": [],
+            "description": "",
+            "_model_name": "HTMLModel",
+            "placeholder": "​",
+            "_view_module": "@jupyter-widgets/controls",
+            "_model_module_version": "1.5.0",
+            "value": " 440M/440M [00:08&lt;00:00, 52.4MB/s]",
+            "_view_count": null,
+            "_view_module_version": "1.5.0",
+            "description_tooltip": null,
+            "_model_module": "@jupyter-widgets/controls",
+            "layout": "IPY_MODEL_af7351d09a684f40a580d96a715123c6"
+          }
+        },
+        "15ce6921d2e449779da2f6386840fd7f": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "ProgressStyleModel",
+          "state": {
+            "_view_name": "StyleView",
+            "_model_name": "ProgressStyleModel",
+            "description_width": "initial",
+            "_view_module": "@jupyter-widgets/base",
+            "_model_module_version": "1.5.0",
+            "_view_count": null,
+            "_view_module_version": "1.2.0",
+            "bar_color": null,
+            "_model_module": "@jupyter-widgets/controls"
+          }
+        },
+        "9566f901792a4a91887799ca99648a03": {
+          "model_module": "@jupyter-widgets/base",
+          "model_name": "LayoutModel",
+          "state": {
+            "_view_name": "LayoutView",
+            "grid_template_rows": null,
+            "right": null,
+            "justify_content": null,
+            "_view_module": "@jupyter-widgets/base",
+            "overflow": null,
+            "_model_module_version": "1.2.0",
+            "_view_count": null,
+            "flex_flow": null,
+            "width": null,
+            "min_width": null,
+            "border": null,
+            "align_items": null,
+            "bottom": null,
+            "_model_module": "@jupyter-widgets/base",
+            "top": null,
+            "grid_column": null,
+            "overflow_y": null,
+            "overflow_x": null,
+            "grid_auto_flow": null,
+            "grid_area": null,
+            "grid_template_columns": null,
+            "flex": null,
+            "_model_name": "LayoutModel",
+            "justify_items": null,
+            "grid_row": null,
+            "max_height": null,
+            "align_content": null,
+            "visibility": null,
+            "align_self": null,
+            "height": null,
+            "min_height": null,
+            "padding": null,
+            "grid_auto_rows": null,
+            "grid_gap": null,
+            "max_width": null,
+            "order": null,
+            "_view_module_version": "1.2.0",
+            "grid_template_areas": null,
+            "object_position": null,
+            "object_fit": null,
+            "grid_auto_columns": null,
+            "margin": null,
+            "display": null,
+            "left": null
+          }
+        },
+        "dff5aec6b2384329a6eb3a43c5647d2b": {
+          "model_module": "@jupyter-widgets/controls",
+          "model_name": "DescriptionStyleModel",
+          "state": {
+            "_view_name": "StyleView",
+            "_model_name": "DescriptionStyleModel",
+            "description_width": "",
+            "_view_module": "@jupyter-widgets/base",
+            "_model_module_version": "1.5.0",
+            "_view_count": null,
+            "_view_module_version": "1.2.0",
+            "_model_module": "@jupyter-widgets/controls"
+          }
+        },
+        "af7351d09a684f40a580d96a715123c6": {
+          "model_module": "@jupyter-widgets/base",
+          "model_name": "LayoutModel",
+          "state": {
+            "_view_name": "LayoutView",
+            "grid_template_rows": null,
+            "right": null,
+            "justify_content": null,
+            "_view_module": "@jupyter-widgets/base",
+            "overflow": null,
+            "_model_module_version": "1.2.0",
+            "_view_count": null,
+            "flex_flow": null,
+            "width": null,
+            "min_width": null,
+            "border": null,
+            "align_items": null,
+            "bottom": null,
+            "_model_module": "@jupyter-widgets/base",
+            "top": null,
+            "grid_column": null,
+            "overflow_y": null,
+            "overflow_x": null,
+            "grid_auto_flow": null,
+            "grid_area": null,
+            "grid_template_columns": null,
+            "flex": null,
+            "_model_name": "LayoutModel",
+            "justify_items": null,
+            "grid_row": null,
+            "max_height": null,
+            "align_content": null,
+            "visibility": null,
+            "align_self": null,
+            "height": null,
+            "min_height": null,
+            "padding": null,
+            "grid_auto_rows": null,
+            "grid_gap": null,
+            "max_width": null,
+            "order": null,
+            "_view_module_version": "1.2.0",
+            "grid_template_areas": null,
+            "object_position": null,
+            "object_fit": null,
+            "grid_auto_columns": null,
+            "margin": null,
+            "display": null,
+            "left": null
+          }
+        }
+      }
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "GQzisgSQZpxA",
+        "outputId": "c79a8f00-91db-4b11-cd44-e55e44e573e3",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 1000
+        }
+      },
+      "source": [
+        "!pip3 install flair\n",
+        "#!pip install allennlp"
+      ],
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Collecting flair\n",
+            "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/f1/0e/38d173e7a5b595e108c7d7a31f7b4d88fb93192f3b12a78998ff500c5203/flair-0.5-py3-none-any.whl (334kB)\n",
+            "\u001b[K     |████████████████████████████████| 337kB 2.8MB/s \n",
+            "\u001b[?25hCollecting pytest>=5.3.2\n",
+            "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/9f/f3/0a83558da436a081344aa6c8b85ea5b5f05071214106036ce341b7769b0b/pytest-5.4.3-py3-none-any.whl (248kB)\n",
+            "\u001b[K     |████████████████████████████████| 256kB 9.0MB/s \n",
+            "\u001b[?25hRequirement already satisfied: regex in /usr/local/lib/python3.6/dist-packages (from flair) (2019.12.20)\n",
+            "Collecting bpemb>=0.2.9\n",
+            "  Downloading https://files.pythonhosted.org/packages/bc/70/468a9652095b370f797ed37ff77e742b11565c6fd79eaeca5f2e50b164a7/bpemb-0.3.0-py3-none-any.whl\n",
+            "Collecting segtok>=1.5.7\n",
+            "  Downloading https://files.pythonhosted.org/packages/41/08/582dab5f4b1d5ca23bc6927b4bb977c8ff7f3a87a3b98844ef833e2f5623/segtok-1.5.10.tar.gz\n",
+            "Requirement already satisfied: matplotlib>=2.2.3 in /usr/local/lib/python3.6/dist-packages (from flair) (3.2.1)\n",
+            "Collecting transformers>=2.10.0\n",
+            "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/48/35/ad2c5b1b8f99feaaf9d7cdadaeef261f098c6e1a6a2935d4d07662a6b780/transformers-2.11.0-py3-none-any.whl (674kB)\n",
+            "\u001b[K     |████████████████████████████████| 675kB 9.5MB/s \n",
+            "\u001b[?25hRequirement already satisfied: tabulate in /usr/local/lib/python3.6/dist-packages (from flair) (0.8.7)\n",
+            "Requirement already satisfied: hyperopt>=0.1.1 in /usr/local/lib/python3.6/dist-packages (from flair) (0.1.2)\n",
+            "Requirement already satisfied: python-dateutil>=2.6.1 in /usr/local/lib/python3.6/dist-packages (from flair) (2.8.1)\n",
+            "Collecting deprecated>=1.2.4\n",
+            "  Downloading https://files.pythonhosted.org/packages/76/a1/05d7f62f956d77b23a640efc650f80ce24483aa2f85a09c03fb64f49e879/Deprecated-1.2.10-py2.py3-none-any.whl\n",
+            "Collecting mpld3==0.3\n",
+            "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/91/95/a52d3a83d0a29ba0d6898f6727e9858fe7a43f6c2ce81a5fe7e05f0f4912/mpld3-0.3.tar.gz (788kB)\n",
+            "\u001b[K     |████████████████████████████████| 798kB 14.0MB/s \n",
+            "\u001b[?25hRequirement already satisfied: scikit-learn>=0.21.3 in /usr/local/lib/python3.6/dist-packages (from flair) (0.22.2.post1)\n",
+            "Requirement already satisfied: gensim>=3.4.0 in /usr/local/lib/python3.6/dist-packages (from flair) (3.6.0)\n",
+            "Requirement already satisfied: torch>=1.1.0 in /usr/local/lib/python3.6/dist-packages (from flair) (1.5.0+cu101)\n",
+            "Requirement already satisfied: tqdm>=4.26.0 in /usr/local/lib/python3.6/dist-packages (from flair) (4.41.1)\n",
+            "Collecting langdetect\n",
+            "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/56/a3/8407c1e62d5980188b4acc45ef3d94b933d14a2ebc9ef3505f22cf772570/langdetect-1.0.8.tar.gz (981kB)\n",
+            "\u001b[K     |████████████████████████████████| 983kB 16.0MB/s \n",
+            "\u001b[?25hCollecting sqlitedict>=1.6.0\n",
+            "  Downloading https://files.pythonhosted.org/packages/0f/1c/c757b93147a219cf1e25cef7e1ad9b595b7f802159493c45ce116521caff/sqlitedict-1.6.0.tar.gz\n",
+            "Collecting pluggy<1.0,>=0.12\n",
+            "  Downloading https://files.pythonhosted.org/packages/a0/28/85c7aa31b80d150b772fbe4a229487bc6644da9ccb7e427dd8cc60cb8a62/pluggy-0.13.1-py2.py3-none-any.whl\n",
+            "Requirement already satisfied: py>=1.5.0 in /usr/local/lib/python3.6/dist-packages (from pytest>=5.3.2->flair) (1.8.1)\n",
+            "Requirement already satisfied: importlib-metadata>=0.12; python_version < \"3.8\" in /usr/local/lib/python3.6/dist-packages (from pytest>=5.3.2->flair) (1.6.0)\n",
+            "Requirement already satisfied: attrs>=17.4.0 in /usr/local/lib/python3.6/dist-packages (from pytest>=5.3.2->flair) (19.3.0)\n",
+            "Requirement already satisfied: more-itertools>=4.0.0 in /usr/local/lib/python3.6/dist-packages (from pytest>=5.3.2->flair) (8.3.0)\n",
+            "Requirement already satisfied: wcwidth in /usr/local/lib/python3.6/dist-packages (from pytest>=5.3.2->flair) (0.2.3)\n",
+            "Requirement already satisfied: packaging in /usr/local/lib/python3.6/dist-packages (from pytest>=5.3.2->flair) (20.4)\n",
+            "Requirement already satisfied: requests in /usr/local/lib/python3.6/dist-packages (from bpemb>=0.2.9->flair) (2.23.0)\n",
+            "Requirement already satisfied: numpy in /usr/local/lib/python3.6/dist-packages (from bpemb>=0.2.9->flair) (1.18.5)\n",
+            "Collecting sentencepiece\n",
+            "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/d4/a4/d0a884c4300004a78cca907a6ff9a5e9fe4f090f5d95ab341c53d28cbc58/sentencepiece-0.1.91-cp36-cp36m-manylinux1_x86_64.whl (1.1MB)\n",
+            "\u001b[K     |████████████████████████████████| 1.1MB 16.4MB/s \n",
+            "\u001b[?25hRequirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.1 in /usr/local/lib/python3.6/dist-packages (from matplotlib>=2.2.3->flair) (2.4.7)\n",
+            "Requirement already satisfied: kiwisolver>=1.0.1 in /usr/local/lib/python3.6/dist-packages (from matplotlib>=2.2.3->flair) (1.2.0)\n",
+            "Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.6/dist-packages (from matplotlib>=2.2.3->flair) (0.10.0)\n",
+            "Requirement already satisfied: filelock in /usr/local/lib/python3.6/dist-packages (from transformers>=2.10.0->flair) (3.0.12)\n",
+            "Collecting tokenizers==0.7.0\n",
+            "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/14/e5/a26eb4716523808bb0a799fcfdceb6ebf77a18169d9591b2f46a9adb87d9/tokenizers-0.7.0-cp36-cp36m-manylinux1_x86_64.whl (3.8MB)\n",
+            "\u001b[K     |████████████████████████████████| 3.8MB 15.6MB/s \n",
+            "\u001b[?25hCollecting sacremoses\n",
+            "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/7d/34/09d19aff26edcc8eb2a01bed8e98f13a1537005d31e95233fd48216eed10/sacremoses-0.0.43.tar.gz (883kB)\n",
+            "\u001b[K     |████████████████████████████████| 890kB 15.7MB/s \n",
+            "\u001b[?25hRequirement already satisfied: dataclasses; python_version < \"3.7\" in /usr/local/lib/python3.6/dist-packages (from transformers>=2.10.0->flair) (0.7)\n",
+            "Requirement already satisfied: scipy in /usr/local/lib/python3.6/dist-packages (from hyperopt>=0.1.1->flair) (1.4.1)\n",
+            "Requirement already satisfied: future in /usr/local/lib/python3.6/dist-packages (from hyperopt>=0.1.1->flair) (0.16.0)\n",
+            "Requirement already satisfied: networkx in /usr/local/lib/python3.6/dist-packages (from hyperopt>=0.1.1->flair) (2.4)\n",
+            "Requirement already satisfied: pymongo in /usr/local/lib/python3.6/dist-packages (from hyperopt>=0.1.1->flair) (3.10.1)\n",
+            "Requirement already satisfied: six in /usr/local/lib/python3.6/dist-packages (from hyperopt>=0.1.1->flair) (1.12.0)\n",
+            "Requirement already satisfied: wrapt<2,>=1.10 in /usr/local/lib/python3.6/dist-packages (from deprecated>=1.2.4->flair) (1.12.1)\n",
+            "Requirement already satisfied: joblib>=0.11 in /usr/local/lib/python3.6/dist-packages (from scikit-learn>=0.21.3->flair) (0.15.1)\n",
+            "Requirement already satisfied: smart-open>=1.2.1 in /usr/local/lib/python3.6/dist-packages (from gensim>=3.4.0->flair) (2.0.0)\n",
+            "Requirement already satisfied: zipp>=0.5 in /usr/local/lib/python3.6/dist-packages (from importlib-metadata>=0.12; python_version < \"3.8\"->pytest>=5.3.2->flair) (3.1.0)\n",
+            "Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.6/dist-packages (from requests->bpemb>=0.2.9->flair) (2020.4.5.1)\n",
+            "Requirement already satisfied: chardet<4,>=3.0.2 in /usr/local/lib/python3.6/dist-packages (from requests->bpemb>=0.2.9->flair) (3.0.4)\n",
+            "Requirement already satisfied: idna<3,>=2.5 in /usr/local/lib/python3.6/dist-packages (from requests->bpemb>=0.2.9->flair) (2.9)\n",
+            "Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1 in /usr/local/lib/python3.6/dist-packages (from requests->bpemb>=0.2.9->flair) (1.24.3)\n",
+            "Requirement already satisfied: click in /usr/local/lib/python3.6/dist-packages (from sacremoses->transformers>=2.10.0->flair) (7.1.2)\n",
+            "Requirement already satisfied: decorator>=4.3.0 in /usr/local/lib/python3.6/dist-packages (from networkx->hyperopt>=0.1.1->flair) (4.4.2)\n",
+            "Requirement already satisfied: boto3 in /usr/local/lib/python3.6/dist-packages (from smart-open>=1.2.1->gensim>=3.4.0->flair) (1.13.23)\n",
+            "Requirement already satisfied: boto in /usr/local/lib/python3.6/dist-packages (from smart-open>=1.2.1->gensim>=3.4.0->flair) (2.49.0)\n",
+            "Requirement already satisfied: botocore<1.17.0,>=1.16.23 in /usr/local/lib/python3.6/dist-packages (from boto3->smart-open>=1.2.1->gensim>=3.4.0->flair) (1.16.23)\n",
+            "Requirement already satisfied: jmespath<1.0.0,>=0.7.1 in /usr/local/lib/python3.6/dist-packages (from boto3->smart-open>=1.2.1->gensim>=3.4.0->flair) (0.10.0)\n",
+            "Requirement already satisfied: s3transfer<0.4.0,>=0.3.0 in /usr/local/lib/python3.6/dist-packages (from boto3->smart-open>=1.2.1->gensim>=3.4.0->flair) (0.3.3)\n",
+            "Requirement already satisfied: docutils<0.16,>=0.10 in /usr/local/lib/python3.6/dist-packages (from botocore<1.17.0,>=1.16.23->boto3->smart-open>=1.2.1->gensim>=3.4.0->flair) (0.15.2)\n",
+            "Building wheels for collected packages: segtok, mpld3, langdetect, sqlitedict, sacremoses\n",
+            "  Building wheel for segtok (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Created wheel for segtok: filename=segtok-1.5.10-cp36-none-any.whl size=25020 sha256=f96154685068147d14429e41ab68abc9864e0e2e4cc8f448dc4bc9b798c5e712\n",
+            "  Stored in directory: /root/.cache/pip/wheels/b4/39/f6/9ca1c5cabde964d728023b5751c3a206a5c8cc40252321fb6b\n",
+            "  Building wheel for mpld3 (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Created wheel for mpld3: filename=mpld3-0.3-cp36-none-any.whl size=116679 sha256=1d378006eeeefdcf7862f0c685c1a192251b4d97401988daf83bd860fd10bff9\n",
+            "  Stored in directory: /root/.cache/pip/wheels/c0/47/fb/8a64f89aecfe0059830479308ad42d62e898a3e3cefdf6ba28\n",
+            "  Building wheel for langdetect (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Created wheel for langdetect: filename=langdetect-1.0.8-cp36-none-any.whl size=993193 sha256=4a8d324014c1afd505b4333a260c68d857d7abdc6f5d603853fa399430281ae3\n",
+            "  Stored in directory: /root/.cache/pip/wheels/8d/b3/aa/6d99de9f3841d7d3d40a60ea06e6d669e8e5012e6c8b947a57\n",
+            "  Building wheel for sqlitedict (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Created wheel for sqlitedict: filename=sqlitedict-1.6.0-cp36-none-any.whl size=14689 sha256=349b05582183a509bdc067b29d6652f1b933a89dc75e1477de92ad5391355e4e\n",
+            "  Stored in directory: /root/.cache/pip/wheels/bd/57/d3/907c3ee02d35e66f674ad0106e61f06eeeb98f6ee66a6cc3fe\n",
+            "  Building wheel for sacremoses (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Created wheel for sacremoses: filename=sacremoses-0.0.43-cp36-none-any.whl size=893260 sha256=7d3a64ce47f4d1a8be501521eebdef8e1cf52c145db7731ca375bd05c0b3cf12\n",
+            "  Stored in directory: /root/.cache/pip/wheels/29/3c/fd/7ce5c3f0666dab31a50123635e6fb5e19ceb42ce38d4e58f45\n",
+            "Successfully built segtok mpld3 langdetect sqlitedict sacremoses\n",
+            "\u001b[31mERROR: datascience 0.10.6 has requirement folium==0.2.1, but you'll have folium 0.8.3 which is incompatible.\u001b[0m\n",
+            "Installing collected packages: pluggy, pytest, sentencepiece, bpemb, segtok, tokenizers, sacremoses, transformers, deprecated, mpld3, langdetect, sqlitedict, flair\n",
+            "  Found existing installation: pluggy 0.7.1\n",
+            "    Uninstalling pluggy-0.7.1:\n",
+            "      Successfully uninstalled pluggy-0.7.1\n",
+            "  Found existing installation: pytest 3.6.4\n",
+            "    Uninstalling pytest-3.6.4:\n",
+            "      Successfully uninstalled pytest-3.6.4\n",
+            "Successfully installed bpemb-0.3.0 deprecated-1.2.10 flair-0.5 langdetect-1.0.8 mpld3-0.3 pluggy-0.13.1 pytest-5.4.3 sacremoses-0.0.43 segtok-1.5.10 sentencepiece-0.1.91 sqlitedict-1.6.0 tokenizers-0.7.0 transformers-2.11.0\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "ysMmVdKBrgiR",
+        "outputId": "21e1fcdd-ef10-4247-854a-2b3072fa214a",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 170
+        }
+      },
+      "source": [
+        "!git clone -l -s http://github.com/RajaHusnainGauher/FYP.git\n"
+      ],
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Cloning into 'FYP'...\n",
+            "warning: --local is ignored\n",
+            "warning: redirecting to https://github.com/RajaHusnainGauher/FYP.git/\n",
+            "remote: Enumerating objects: 49, done.\u001b[K\n",
+            "remote: Counting objects: 100% (49/49), done.\u001b[K\n",
+            "remote: Compressing objects: 100% (42/42), done.\u001b[K\n",
+            "remote: Total 2931 (delta 15), reused 3 (delta 0), pack-reused 2882\u001b[K\n",
+            "Receiving objects: 100% (2931/2931), 13.91 MiB | 7.61 MiB/s, done.\n",
+            "Resolving deltas: 100% (488/488), done.\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "Uy2p7s2p2wOG",
+        "outputId": "c8ddf5ae-9797-49f4-8ca6-dbeb53574f60",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        }
+      },
+      "source": [
+        "import numpy as np\n",
+        "import pandas as pd\n",
+        "from flair.embeddings import WordEmbeddings, StackedEmbeddings, BertEmbeddings, ELMoEmbeddings, FlairEmbeddings\n",
+        "from flair.data import Sentence\n",
+        "from keras.layers import Input, Dense, GRU, Bidirectional, Flatten\n",
+        "from keras.optimizers import Adam\n",
+        "from keras.models import Model\n",
+        "import matplotlib.pyplot as plt\n",
+        "from mpl_toolkits.mplot3d import Axes3D\n",
+        "import matplotlib as mpl\n",
+        "from sklearn.model_selection import KFold"
+      ],
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Using TensorFlow backend.\n"
+          ],
+          "name": "stderr"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "Ch_47G4CvaaV",
+        "colab": {}
+      },
+      "source": [
+        "import pandas as pd \n",
+        "data = pd.read_csv(\"/content/FYP/data/ml/wassen.csv\")"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "colab_type": "text",
+        "id": "VNecjgLWGRZx"
+      },
+      "source": [
+        ""
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "vP4GG4VJxLdZ",
+        "colab": {}
+      },
+      "source": [
+        "from sklearn.utils import shuffle\n",
+        "data = shuffle(data)"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "JvLGVkbVvo6P",
+        "outputId": "ba900d92-fc4c-4a8a-f43d-d0c399ddd7f9",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        }
+      },
+      "source": [
+        "import re\n",
+        "import string\n",
+        "string.punctuation"
+      ],
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'!\"#$%&\\'()*+,-./:;<=>?@[\\\\]^_`{|}~'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 7
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "dvzzW8_lnXCg",
+        "colab": {}
+      },
+      "source": [
+        "def URLS(text):\n",
+        "  try:\n",
+        "    out=re.sub(r'@[A-Za-z0-9]+','',text)\n",
+        "    return re.sub('http:?//@[A-Za-z0-9./]+','',out)\n",
+        "  except:\n",
+        "    print(\"error\")\n",
+        "\n",
+        "\n"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "nxyFDyzKpYtM",
+        "colab": {}
+      },
+      "source": [
+        "def alpha(text):\n",
+        "  try:\n",
+        "    out=\"\".join([char for char in text if char not in string.punctuation])\n",
+        "    return out\n",
+        "  except:\n",
+        "    print(\"error\")"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "_yq6q8QLqNOD",
+        "colab": {}
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "HFdRNA-Qp4-R",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 51
+        },
+        "outputId": "bb269a4a-25dd-4284-9e68-b60660ccaa7d"
+      },
+      "source": [
+        "data['tweet']=data['tweet'].apply(lambda x:URLS(x))\n",
+        "data['tweet']=data['tweet'].apply(lambda x:alpha(x))"
+      ],
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "error\n",
+            "error\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "3X-u4vSVxY45",
+        "colab": {}
+      },
+      "source": [
+        "dataset=data"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "GtBhPcuSWE1c",
+        "outputId": "35873238-45c9-48ce-841c-f8063cfa9a04",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 419
+        }
+      },
+      "source": [
+        "dataset"
+      ],
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Unnamed: 0</th>\n",
+              "      <th>Unnamed: 0.1</th>\n",
+              "      <th>index</th>\n",
+              "      <th>tweet</th>\n",
+              "      <th>class</th>\n",
+              "      <th>norm</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>14805</th>\n",
+              "      <td>688</td>\n",
+              "      <td>688</td>\n",
+              "      <td>14020</td>\n",
+              "      <td>Jihad10  Whats to understand People come in w...</td>\n",
+              "      <td>none</td>\n",
+              "      <td>2</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1146</th>\n",
+              "      <td>1146</td>\n",
+              "      <td>1146</td>\n",
+              "      <td>8356</td>\n",
+              "      <td>heres hoping sudden death with Kat amp</td>\n",
+              "      <td>none</td>\n",
+              "      <td>2</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>5399</th>\n",
+              "      <td>5399</td>\n",
+              "      <td>5399</td>\n",
+              "      <td>12702</td>\n",
+              "      <td>manual filter tweets</td>\n",
+              "      <td>none</td>\n",
+              "      <td>2</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>10088</th>\n",
+              "      <td>10088</td>\n",
+              "      <td>10088</td>\n",
+              "      <td>15925</td>\n",
+              "      <td>Please PLEASE start using is your discernment ...</td>\n",
+              "      <td>none</td>\n",
+              "      <td>2</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>7477</th>\n",
+              "      <td>7477</td>\n",
+              "      <td>7477</td>\n",
+              "      <td>12188</td>\n",
+              "      <td>tweetbot is a paid client</td>\n",
+              "      <td>none</td>\n",
+              "      <td>2</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>...</th>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>14849</th>\n",
+              "      <td>732</td>\n",
+              "      <td>732</td>\n",
+              "      <td>15607</td>\n",
+              "      <td>I am laughing my ASS off at your fauxffense T...</td>\n",
+              "      <td>none</td>\n",
+              "      <td>2</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1277</th>\n",
+              "      <td>1277</td>\n",
+              "      <td>1277</td>\n",
+              "      <td>16009</td>\n",
+              "      <td>RT    amp</td>\n",
+              "      <td>none</td>\n",
+              "      <td>2</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>12743</th>\n",
+              "      <td>1416</td>\n",
+              "      <td>1416</td>\n",
+              "      <td>15810</td>\n",
+              "      <td>My brow is so knit in disgust I lost an Mamp</td>\n",
+              "      <td>none</td>\n",
+              "      <td>2</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>418</th>\n",
+              "      <td>418</td>\n",
+              "      <td>418</td>\n",
+              "      <td>4528</td>\n",
+              "      <td>RT  Im not sexist but What Ferrari was it Skin...</td>\n",
+              "      <td>sexism</td>\n",
+              "      <td>1</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>7979</th>\n",
+              "      <td>7979</td>\n",
+              "      <td>7979</td>\n",
+              "      <td>6675</td>\n",
+              "      <td>Lets serve Colin Chev Up sausages MKR</td>\n",
+              "      <td>none</td>\n",
+              "      <td>2</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "<p>16907 rows × 6 columns</p>\n",
+              "</div>"
+            ],
+            "text/plain": [
+              "       Unnamed: 0  Unnamed: 0.1  ...   class norm\n",
+              "14805         688           688  ...    none    2\n",
+              "1146         1146          1146  ...    none    2\n",
+              "5399         5399          5399  ...    none    2\n",
+              "10088       10088         10088  ...    none    2\n",
+              "7477         7477          7477  ...    none    2\n",
+              "...           ...           ...  ...     ...  ...\n",
+              "14849         732           732  ...    none    2\n",
+              "1277         1277          1277  ...    none    2\n",
+              "12743        1416          1416  ...    none    2\n",
+              "418           418           418  ...  sexism    1\n",
+              "7979         7979          7979  ...    none    2\n",
+              "\n",
+              "[16907 rows x 6 columns]"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 12
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "rLp7TWZ41bSm",
+        "outputId": "ffd369d2-14c9-4e1c-adf2-a3f43b77daf4",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 218,
+          "referenced_widgets": [
+            "9810b9ce8a724a04895e0f0761cb4c1d",
+            "bf496edd9f02492e9455abb9db1943c0",
+            "1b23d4613cdd4279b941e2b871b4a8cb",
+            "99841ff6c16e4612954c3fff8289d148",
+            "007b72be6c724acba9d8bb7286836ec1",
+            "c3aff9f63dd74f6a8259f6f46a403e5e",
+            "673095ef16c54e2e9d9278d9b8687b11",
+            "aa283bb3949944db85328ec956c5293b",
+            "7423ced8ffcf4f48920caf33c086cfaf",
+            "77472331ea9b4ebcab34007e98b81d2c",
+            "bfe52ea1cf154c9fa671bba41e31e4e6",
+            "b74a2fde2b6e4852a682e74656c0b46e",
+            "e79e2d58c2bc4a368b88f11ab24fe762",
+            "21a437921b9d4d5895b2d7e7707b2b50",
+            "d84e13c8774846f8bd604a844dc720ab",
+            "b0cc9a809cd54a178dfb2c3c9e7ed732",
+            "7e240a910ecc4aab8d4c2a12b3c1a740",
+            "a8a306ec2a424b5f90778d5e8a0a4643",
+            "6c001090d5ca4a1aa64f6f50f24e4d33",
+            "86a845c5e1a943b7b5b5a5924fa63c69",
+            "15ce6921d2e449779da2f6386840fd7f",
+            "9566f901792a4a91887799ca99648a03",
+            "dff5aec6b2384329a6eb3a43c5647d2b",
+            "af7351d09a684f40a580d96a715123c6"
+          ]
+        }
+      },
+      "source": [
+        "stacked_embedding = StackedEmbeddings([BertEmbeddings('bert-base-uncased')])\n",
+        "# flair_forward_embedding = FlairEmbeddings('news-forward')\n",
+        "# flair_backward_embedding = FlairEmbeddings('news-backward')\n",
+        "# stacked_embedding = StackedEmbeddings(embeddings=[flair_forward_embedding, flair_backward_embedding])\n"
+      ],
+      "execution_count": 13,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "/usr/local/lib/python3.6/dist-packages/ipykernel_launcher.py:1: DeprecationWarning: Call to deprecated method __init__. (Use 'TransformerWordEmbeddings' for all transformer-based word embeddings) -- Deprecated since version 0.4.5.\n",
+            "  \"\"\"Entry point for launching an IPython kernel.\n"
+          ],
+          "name": "stderr"
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "application/vnd.jupyter.widget-view+json": {
+              "model_id": "9810b9ce8a724a04895e0f0761cb4c1d",
+              "version_minor": 0,
+              "version_major": 2
+            },
+            "text/plain": [
+              "HBox(children=(FloatProgress(value=0.0, description='Downloading', max=231508.0, style=ProgressStyle(descripti…"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          }
+        },
+        {
+          "output_type": "stream",
+          "text": [
+            "\n"
+          ],
+          "name": "stdout"
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "application/vnd.jupyter.widget-view+json": {
+              "model_id": "7423ced8ffcf4f48920caf33c086cfaf",
+              "version_minor": 0,
+              "version_major": 2
+            },
+            "text/plain": [
+              "HBox(children=(FloatProgress(value=0.0, description='Downloading', max=433.0, style=ProgressStyle(description_…"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          }
+        },
+        {
+          "output_type": "stream",
+          "text": [
+            "\n"
+          ],
+          "name": "stdout"
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "application/vnd.jupyter.widget-view+json": {
+              "model_id": "7e240a910ecc4aab8d4c2a12b3c1a740",
+              "version_minor": 0,
+              "version_major": 2
+            },
+            "text/plain": [
+              "HBox(children=(FloatProgress(value=0.0, description='Downloading', max=440473133.0, style=ProgressStyle(descri…"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          }
+        },
+        {
+          "output_type": "stream",
+          "text": [
+            "\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "2f87aLpyaKhz",
+        "colab_type": "code",
+        "outputId": "e4b45015-cb34-4634-cb0a-e62545a97191",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 51
+        }
+      },
+      "source": [
+        "rows = dataset.shape[0]\n",
+        "i = 1000\n",
+        "sets = 0\n",
+        "while(i < rows):\n",
+        "  i = i + 1000\n",
+        "  sets =sets + 1\n",
+        "mid1 = int(sets/2)*1000\n",
+        "mid2 = sets*1000\n",
+        "dataset1 = dataset[0:mid1]\n",
+        "dataset2 = dataset[mid1:mid2]\n",
+        "print('dataset1 shape: ',dataset1.shape)\n",
+        "print('dataset2 shape: ',dataset2.shape)\n",
+        "btch_size = dataset1.shape[0]\n"
+      ],
+      "execution_count": 14,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "dataset1 shape:  (8000, 6)\n",
+            "dataset2 shape:  (8000, 6)\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "R0P13JgowJzi",
+        "colab_type": "code",
+        "outputId": "239dc31a-ff41-48b7-d1bb-02d29074757a",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        }
+      },
+      "source": [
+        "#temporary\n",
+        "# dataset1 = dataset[0:5000]\n",
+        "# print('dataset1 shape: ',dataset1.shape)\n",
+        "# btch_size = dataset1.shape[0]"
+      ],
+      "execution_count": 0,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "dataset1 shape:  (5000, 7)\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "D6odDAKU23_X",
+        "colab": {}
+      },
+      "source": [
+        "def generateTrainingData(dataset, batch_size, max_length, num_classes, emb_size):\n",
+        "  \n",
+        "  x_batch = []\n",
+        "  y_batch = []\n",
+        "  while True:\n",
+        "    data = dataset.sample(frac=1)\n",
+        "    for index, row in data.iterrows():\n",
+        "        try:\n",
+        "          my_sent = row[\"tweet\"]\n",
+        "          sentence = Sentence(my_sent)\n",
+        "          stacked_embedding.embed(sentence)\n",
+        "          \n",
+        "          \n",
+        "          x = []\n",
+        "          for token in sentence:\n",
+        "            x.append(token.embedding.cpu().detach().numpy())\n",
+        "            if len(x) == max_length:\n",
+        "              break\n",
+        "          \n",
+        "          while len(x) < max_length:\n",
+        "            x.append(np.zeros(emb_size))\n",
+        "          \n",
+        "          y = np.zeros(num_classes)\n",
+        "          y[row[\"norm\"]] = 1    #'class' for other datasets 'norm' for wassen\n",
+        "          \n",
+        "          x_batch.append(x)            \n",
+        "          y_batch.append(y)\n",
+        "        except:\n",
+        "          print(\"An exception occurred\")\n",
+        "\n",
+        "        if len(y_batch) == batch_size:\n",
+        "          return np.array(x_batch), np.array(y_batch)\n",
+        "\n",
+        "          x_batch = []\n",
+        "          y_batch = []"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "_j406n6sJ1lP",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "#Embedd Dataset1\n",
+        "x,y = generateTrainingData(dataset=dataset1, batch_size=btch_size, max_length=20, num_classes=3, emb_size=3072)"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "AgmdG5Wl1c0Z",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "# del variables for union dataset to clear ram\n",
+        "del dataset1\n",
+        "del dataset\n",
+        "del data"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "Sm62Qc_J6epx",
+        "colab_type": "code",
+        "outputId": "e34fddc1-2d5c-45d8-bf1f-92916dee3026",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 357
+        }
+      },
+      "source": [
+        "kfold = KFold(n_splits=4, shuffle=True, random_state=1)\n",
+        "for train_index, test_index in kfold.split(x):\n",
+        "  X_train, y_train = x[train_index], y[train_index] \n",
+        "  X_test, y_test = x[test_index], y[test_index]\n",
+        "  print(X_train.shape)\n",
+        "  print(y_train.shape)\n",
+        "  print(X_test.shape)\n",
+        "  print(y_test.shape)\n",
+        "  print('--------')"
+      ],
+      "execution_count": 0,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "(11250, 20, 3072)\n",
+            "(11250, 3)\n",
+            "(3750, 20, 3072)\n",
+            "(3750, 3)\n",
+            "--------\n",
+            "(11250, 20, 3072)\n",
+            "(11250, 3)\n",
+            "(3750, 20, 3072)\n",
+            "(3750, 3)\n",
+            "--------\n",
+            "(11250, 20, 3072)\n",
+            "(11250, 3)\n",
+            "(3750, 20, 3072)\n",
+            "(3750, 3)\n",
+            "--------\n",
+            "(11250, 20, 3072)\n",
+            "(11250, 3)\n",
+            "(3750, 20, 3072)\n",
+            "(3750, 3)\n",
+            "--------\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "pnd6P-Ahd-7E",
+        "colab": {}
+      },
+      "source": [
+        "from sklearn.model_selection import train_test_split\n",
+        "X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.25, random_state=42)#.20 for union dataset"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "AEPlAwu5f3K9",
+        "outputId": "50947b0e-fd05-44cc-8a04-ab0254600e82",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        }
+      },
+      "source": [
+        "y_train.shape"
+      ],
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "(6000, 3)"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 19
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "RCZR3rwkcWxg",
+        "colab": {}
+      },
+      "source": [
+        "from keras.layers import Dropout,Conv1D,MaxPool1D,GlobalMaxPooling1D,LSTM\n",
+        "from keras.layers.normalization import BatchNormalization"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "IpmY4PvsQJPa",
+        "colab": {}
+      },
+      "source": [
+        "kernel_size = 1\n",
+        "filters =1000"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "CKZRxj65Rybs",
+        "outputId": "5359c49b-fdd2-44b0-9e61-675f3defb152",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 408
+        }
+      },
+      "source": [
+        "def declare_model(batch_size, max_len, emb_size, gru_size, num_classes):\n",
+        " \n",
+        "  sample = Input(batch_shape=(batch_size, max_len, emb_size))\n",
+        "  dropout=Dropout(0.2)(sample)\n",
+        "  conv1=Conv1D(filters,kernel_size,padding='valid',activation='relu',strides=1)(dropout)\n",
+        " \n",
+        "  mp=MaxPool1D(pool_size=4)(conv1)\n",
+        "  gru_out = Bidirectional(GRU(gru_size, return_sequences=True))(mp)\n",
+        "\n",
+        "\n",
+        "  gru_out = Flatten()(gru_out)\n",
+        "  #model.add(BatchNormalization())\n",
+        "  #batchnorm = BatchNormalization()(gru_out)\n",
+        "  predictions = Dense(num_classes, activation='sigmoid')(gru_out)\n",
+        "\n",
+        "  model = Model(inputs=sample, outputs=[predictions])\n",
+        "  model.compile(optimizer=Adam(),loss='categorical_crossentropy', metrics=[\"acc\"])\n",
+        "  print(model.summary())\n",
+        "\n",
+        "  return model\n",
+        "m = declare_model(batch_size=100, max_len=20, emb_size=3072, gru_size=100, num_classes=3)"
+      ],
+      "execution_count": 22,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Model: \"model_1\"\n",
+            "_________________________________________________________________\n",
+            "Layer (type)                 Output Shape              Param #   \n",
+            "=================================================================\n",
+            "input_1 (InputLayer)         (100, 20, 3072)           0         \n",
+            "_________________________________________________________________\n",
+            "dropout_1 (Dropout)          (100, 20, 3072)           0         \n",
+            "_________________________________________________________________\n",
+            "conv1d_1 (Conv1D)            (100, 20, 1000)           3073000   \n",
+            "_________________________________________________________________\n",
+            "max_pooling1d_1 (MaxPooling1 (100, 5, 1000)            0         \n",
+            "_________________________________________________________________\n",
+            "gru_1 (GRU)                  (100, 5, 100)             330300    \n",
+            "_________________________________________________________________\n",
+            "flatten_1 (Flatten)          (100, 500)                0         \n",
+            "_________________________________________________________________\n",
+            "dense_1 (Dense)              (100, 3)                  1503      \n",
+            "=================================================================\n",
+            "Total params: 3,404,803\n",
+            "Trainable params: 3,404,803\n",
+            "Non-trainable params: 0\n",
+            "_________________________________________________________________\n",
+            "None\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "R7PjRMGC4au8",
+        "outputId": "0363e03b-16e9-41f3-b1bf-e559a9d19351",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 391
+        }
+      },
+      "source": [
+        "# kfold = KFold(n_splits=4, shuffle=True, random_state=1)\n",
+        "# for train_index, test_index in kfold.split(x):\n",
+        "#   X_train, y_train = x[train_index], y[train_index] \n",
+        "#   X_test, y_test = x[test_index], y[test_index]\n",
+        "#   # print(X_train.shape)\n",
+        "#   # print(y_train.shape)\n",
+        "#   # print(X_test.shape)\n",
+        "#   # print(y_test.shape)\n",
+        "#   print('--------')\n",
+        "m.fit(X_train,y_train,batch_size=100,epochs=10,validation_split=0.1)"
+      ],
+      "execution_count": 23,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Train on 5400 samples, validate on 600 samples\n",
+            "Epoch 1/10\n",
+            "5400/5400 [==============================] - 10s 2ms/step - loss: 0.6155 - acc: 0.6989 - val_loss: 0.5014 - val_acc: 0.8017\n",
+            "Epoch 2/10\n",
+            "5400/5400 [==============================] - 4s 698us/step - loss: 0.4524 - acc: 0.8028 - val_loss: 0.4466 - val_acc: 0.8183\n",
+            "Epoch 3/10\n",
+            "5400/5400 [==============================] - 4s 679us/step - loss: 0.3691 - acc: 0.8439 - val_loss: 0.4311 - val_acc: 0.8433\n",
+            "Epoch 4/10\n",
+            "5400/5400 [==============================] - 4s 671us/step - loss: 0.2940 - acc: 0.8806 - val_loss: 0.4708 - val_acc: 0.8150\n",
+            "Epoch 5/10\n",
+            "5400/5400 [==============================] - 4s 673us/step - loss: 0.2153 - acc: 0.9198 - val_loss: 0.5428 - val_acc: 0.7917\n",
+            "Epoch 6/10\n",
+            "5400/5400 [==============================] - 4s 668us/step - loss: 0.1267 - acc: 0.9565 - val_loss: 0.6178 - val_acc: 0.7933\n",
+            "Epoch 7/10\n",
+            "5400/5400 [==============================] - 4s 668us/step - loss: 0.0734 - acc: 0.9820 - val_loss: 0.6384 - val_acc: 0.7983\n",
+            "Epoch 8/10\n",
+            "5400/5400 [==============================] - 4s 674us/step - loss: 0.0443 - acc: 0.9900 - val_loss: 0.6969 - val_acc: 0.8233\n",
+            "Epoch 9/10\n",
+            "5400/5400 [==============================] - 4s 672us/step - loss: 0.0390 - acc: 0.9904 - val_loss: 0.7169 - val_acc: 0.7817\n",
+            "Epoch 10/10\n",
+            "5400/5400 [==============================] - 4s 672us/step - loss: 0.0236 - acc: 0.9946 - val_loss: 0.7381 - val_acc: 0.8267\n"
+          ],
+          "name": "stdout"
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "<keras.callbacks.callbacks.History at 0x7efdcc4d88d0>"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 23
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "qmPVjLVHwLgh",
+        "colab": {}
+      },
+      "source": [
+        "weights = m.get_weights()  # Retrieve the state of the model.\n",
+        "m.set_weights(weights)\n",
+        "del x\n",
+        "del y\n",
+        "del X_train\n",
+        "del y_train\n",
+        "#del dataset1"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "4ioIQYu3hkZf",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "#Embedd Dataset2\n",
+        "x1,y1 = generateTrainingData(dataset=dataset2, batch_size=btch_size, max_length=20, num_classes=3, emb_size=3072)"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "NpAqh-3Q6mij",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "del dataset2"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "JevwsI7diA4q",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "X_train1, X_test1, y_train1, y_test1 = train_test_split(x1, y1, test_size=0.25, random_state=42)#.20 for union dataset"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "kTE3YRyo63Li",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "del x1\n",
+        "del y1"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "Xho5u0xAixjo",
+        "colab_type": "code",
+        "outputId": "031892f6-4508-4f14-bae3-22fb1eaf1779",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 391
+        }
+      },
+      "source": [
+        "m.fit(X_train1,y_train1,batch_size=100,epochs=10,validation_split=0.1)"
+      ],
+      "execution_count": 29,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Train on 5400 samples, validate on 600 samples\n",
+            "Epoch 1/10\n",
+            "5400/5400 [==============================] - 4s 664us/step - loss: 0.5368 - acc: 0.7970 - val_loss: 0.4263 - val_acc: 0.8350\n",
+            "Epoch 2/10\n",
+            "5400/5400 [==============================] - 3s 644us/step - loss: 0.3775 - acc: 0.8489 - val_loss: 0.4120 - val_acc: 0.8217\n",
+            "Epoch 3/10\n",
+            "5400/5400 [==============================] - 3s 646us/step - loss: 0.3094 - acc: 0.8770 - val_loss: 0.3925 - val_acc: 0.8250\n",
+            "Epoch 4/10\n",
+            "5400/5400 [==============================] - 3s 642us/step - loss: 0.2199 - acc: 0.9215 - val_loss: 0.3996 - val_acc: 0.8450\n",
+            "Epoch 5/10\n",
+            "5400/5400 [==============================] - 3s 642us/step - loss: 0.1453 - acc: 0.9530 - val_loss: 0.4409 - val_acc: 0.8583\n",
+            "Epoch 6/10\n",
+            "5400/5400 [==============================] - 3s 645us/step - loss: 0.0852 - acc: 0.9752 - val_loss: 0.4512 - val_acc: 0.8467\n",
+            "Epoch 7/10\n",
+            "5400/5400 [==============================] - 3s 645us/step - loss: 0.0402 - acc: 0.9915 - val_loss: 0.5125 - val_acc: 0.8500\n",
+            "Epoch 8/10\n",
+            "5400/5400 [==============================] - 3s 647us/step - loss: 0.0207 - acc: 0.9965 - val_loss: 0.5793 - val_acc: 0.8450\n",
+            "Epoch 9/10\n",
+            "5400/5400 [==============================] - 4s 658us/step - loss: 0.0163 - acc: 0.9954 - val_loss: 0.5467 - val_acc: 0.8533\n",
+            "Epoch 10/10\n",
+            "5400/5400 [==============================] - 4s 651us/step - loss: 0.0116 - acc: 0.9969 - val_loss: 0.5930 - val_acc: 0.8517\n"
+          ],
+          "name": "stdout"
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "<keras.callbacks.callbacks.History at 0x7efdcd181320>"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 29
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "6p9Zg66FoRth",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "del X_train1\n",
+        "del y_train1"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "jzuaD-x4iH0k",
+        "colab_type": "code",
+        "outputId": "98096b12-5213-4548-a864-040c17ef0a57",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 102
+        }
+      },
+      "source": [
+        "print(X_test1.shape)\n",
+        "print(y_test1.shape)\n",
+        "print(X_test.shape)\n",
+        "print(y_test.shape)\n",
+        "X_test_complete = np.concatenate((X_test1, X_test))\n",
+        "print(X_test_complete.shape)"
+      ],
+      "execution_count": 31,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "(2000, 20, 3072)\n",
+            "(2000, 3)\n",
+            "(2000, 20, 3072)\n",
+            "(2000, 3)\n",
+            "(4000, 20, 3072)\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "PJ5pYc-fyILN",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "#temp\n",
+        "# X_test_complete = X_test\n",
+        "# print(X_test_complete.shape)"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "e-STzxpYocAA",
+        "colab_type": "code",
+        "outputId": "5dee5fa9-fe3a-4269-f973-3d65da04f807",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        }
+      },
+      "source": [
+        "y_test_complete = np.concatenate((y_test1, y_test))\n",
+        "print(y_test_complete.shape)"
+      ],
+      "execution_count": 33,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "(4000, 3)\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "xeoKswfky2xG",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "#temp\n",
+        "# y_test_complete = y_test\n",
+        "# print(y_test_complete.shape)"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "SItUV27E4dXa",
+        "colab": {}
+      },
+      "source": [
+        "def generatePredictionData(dataset, batch_size, max_length, num_classes, emb_size):\n",
+        "  \n",
+        "  x_batch = []\n",
+        "  while True:\n",
+        "    for text in dataset:\n",
+        " \n",
+        "        my_sent = text\n",
+        "        sentence = Sentence(my_sent)\n",
+        "        stacked_embedding.embed(sentence)\n",
+        "        \n",
+        "        x = []\n",
+        "        for token in sentence:\n",
+        "          x.append(token.embedding.cpu().detach().numpy())\n",
+        "          if len(x) == max_length:\n",
+        "            break\n",
+        "        \n",
+        "        while len(x) < max_length:\n",
+        "          x.append(np.zeros(emb_size))\n",
+        "        \n",
+        "\n",
+        "        \n",
+        "        x_batch.append(x)            \n",
+        "\n",
+        "        if len(x_batch) == batch_size:\n",
+        "          yield np.array(x_batch)\n",
+        "\n",
+        "          x_batch = []"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "JcXBg3rMq2hS",
+        "colab_type": "code",
+        "outputId": "805389fa-6bc8-4f13-8d92-8e9d738ec895",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        }
+      },
+      "source": [
+        "test_rows = int(y_test_complete.shape[0]/100)\n",
+        "test_rows"
+      ],
+      "execution_count": 36,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "40"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 36
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "UKUza4DA52oD",
+        "colab_type": "text"
+      },
+      "source": [
+        ""
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "yXTV8iIYbbim",
+        "outputId": "d993fba8-d753-466e-ae88-676cb3943c01",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        }
+      },
+      "source": [
+        "i=0\n",
+        "new=[]\n",
+        "new=np.asarray(new)\n",
+        "while i<test_rows:\n",
+        "  new=np.concatenate((new,np.argmax(m.predict(X_test_complete[i*100:(i+1)*100], steps=1), axis=1)),axis=None)\n",
+        "  i+=1\n",
+        "print(new)"
+      ],
+      "execution_count": 37,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "[0. 2. 2. ... 2. 1. 1.]\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "XWspOkrgL_BP",
+        "colab": {}
+      },
+      "source": [
+        "n=np.asarray(y_test_complete)"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "FmOqB7KNNqXI",
+        "outputId": "8da4ecf9-8841-48a7-aae4-51512044f446",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        }
+      },
+      "source": [
+        "n.shape"
+      ],
+      "execution_count": 39,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "(4000, 3)"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 39
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "btWjEO0UMQmp",
+        "colab": {}
+      },
+      "source": [
+        "i=0\n",
+        "L=[]\n",
+        "while(i<n.shape[0]):\n",
+        "  if(n[i][0]==1):\n",
+        "    L.append(0)\n",
+        "  elif(n[i][1]==1):\n",
+        "    L.append(1)\n",
+        "  else:\n",
+        "    L.append(2)\n",
+        "  i+=1"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "LytS98pYMRv4",
+        "colab": {}
+      },
+      "source": [
+        "n1=np.asarray(L)"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "OoQmDjXwNnfW",
+        "outputId": "1bc9613e-43e4-4ab8-e0fa-7e6a94daf68f",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        }
+      },
+      "source": [
+        "from sklearn.metrics import f1_score,precision_score,recall_score,accuracy_score\n",
+        "print(f1_score(n1,new,average=\"micro\"))"
+      ],
+      "execution_count": 42,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "0.8195\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "r_5QaFC0N9M7",
+        "colab": {}
+      },
+      "source": [
+        "#save and load model\n",
+        "from keras.models import model_from_json\n",
+        "from keras.models import load_model"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "z_MCcIi-_qCK",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "# serialize model to JSON\n",
+        "#  the keras model which is trained is defined as 'model' in this example\n",
+        "model_json = m.to_json()\n",
+        "\n",
+        "\n",
+        "with open(\"wassen(2)_model.json\", \"w\") as json_file:\n",
+        "    json_file.write(model_json)\n",
+        "\n",
+        "# serialize weights to HDF5\n",
+        "m.save_weights(\"wassen(2)_weights.h5\")"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "iMh1zDmBANpC",
+        "colab_type": "code",
+        "outputId": "526e18e5-3c12-46e5-a8ab-88a0825ca803",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 68
+        }
+      },
+      "source": [
+        "# load json and create model\n",
+        "json_file = open('/content/wassen(2)_model.json', 'r')\n",
+        "\n",
+        "loaded_model_json = json_file.read()\n",
+        "json_file.close()\n",
+        "loaded_model = model_from_json(loaded_model_json)\n",
+        "\n",
+        "# load weights into new model\n",
+        "loaded_model.load_weights(\"/content/wassen(2)_weights.h5\")\n",
+        "print(\"Loaded model from disk\")\n",
+        "\n",
+        "loaded_model.save('wassen(2).hdf5')\n",
+        "loaded_model=load_model('/content/wassen(2).hdf5')"
+      ],
+      "execution_count": 62,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Loaded model from disk\n"
+          ],
+          "name": "stdout"
+        },
+        {
+          "output_type": "stream",
+          "text": [
+            "/usr/local/lib/python3.6/dist-packages/keras/engine/saving.py:341: UserWarning: No training configuration found in save file: the model was *not* compiled. Compile it manually.\n",
+            "  warnings.warn('No training configuration found in save file: '\n"
+          ],
+          "name": "stderr"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "OtCs6O5zA87V",
+        "colab_type": "code",
+        "outputId": "94a2584b-a73c-459d-9f0f-808c6200c9de",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 68
+        }
+      },
+      "source": [
+        "#here you can enter string after loading your model and test your model\n",
+        "#tdavidson 0=sexism,2=racism,1=none\n",
+        "#wassen 0=racism,2=none,sexism=1\n",
+        "num = input (\"Enter a string \\n\") \n",
+        "sentence = Sentence(num)\n",
+        "stacked_embedding.embed(sentence)     \n",
+        "x = []\n",
+        "i=0\n",
+        "for token in sentence:\n",
+        "  x.append(token.embedding.cpu().detach().numpy())\n",
+        "  \n",
+        "\n",
+        "while len(x) < 20:\n",
+        "          x.append(np.zeros(3072))\n",
+        "  \n",
+        "#-------------------------------------------------------------------\n",
+        "x1=[]\n",
+        "i=0\n",
+        "while i<100:\n",
+        "  x1.append(x)\n",
+        "  i=i+1\n",
+        "#-------------------------------------------------------------------\n",
+        "x1=np.asarray(x1)\n",
+        "#-------------------------------------------------------------------\n",
+        "i=0\n",
+        "new=[]\n",
+        "new=np.asarray(new)\n",
+        "while i<1:\n",
+        "  new=np.concatenate((new,np.argmax(loaded_model.predict(x1[i*100:(i+1)*100], steps=1), axis=1)),axis=None)\n",
+        "  i+=1\n",
+        "\n",
+        "# if(new[0]==0):\n",
+        "#   print(\"racist\")\n",
+        "\n",
+        "\n",
+        "# if(new[0]==2):\n",
+        "#   print(\"None\")\n",
+        "\n",
+        "\n",
+        "# if(new[0]==1):\n",
+        "#   print(\"Sexist\")\n",
+        "\n",
+        "if(new[0]==0):\n",
+        "  print(\"hate\")\n",
+        "\n",
+        "if(new[0]==1):\n",
+        "  print(\"not hate\")\n",
+        "\n",
+        "#-------------------------------------------------------------------\n",
+        "\n"
+      ],
+      "execution_count": 67,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Enter a string \n",
+            "For us, Muslims are always welcomed in our community\n",
+            "hate\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "tAEXu3OzFDTh",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "Womens don't deserve to be leaders \n",
+        "Muslims should go back to their countries\n",
+        "Ali was such a bully that i'm not surprised he's still doing this\n",
+        "For us, Muslims are always welcomed in our community (go for 'they' and 'Hindus')\n",
+        "#-------------------(samples from dataset)---------------------------\n",
+        "I hate women sports analysts #notsexist #theyrejustannoying\n",
+        "Today, Christians are still murdered by rampaging Muslim mobs in Pakistan and Egypt.\n",
+        "Better get out of the ME Norway girl or you won't make it through 2015."
+      ],
+      "execution_count": 0,
+      "outputs": []
+    }
+  ]
+}
